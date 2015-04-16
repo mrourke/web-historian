@@ -2,6 +2,12 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 
+var urlList = JSON.parse(fs.readFileSync('./archives/sites.txt', 'utf8'));
+// fs.readFileSync('../archives/sites.txt', 'utf8', function(err, data) {
+//   console.log('sites.txt data ' + data);
+//   urlList = JSON.parse(data); 
+// });
+
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
  * Consider using the `paths` object below to store frequently used file paths. This way,
@@ -28,14 +34,19 @@ exports.initialize = function(pathsObj){
 exports.readListOfUrls = function(){
 };
 
-exports.isUrlInList = function(){
+exports.isUrlInList = function(url){
+  return _.contains(urlList, url);
 };
 
-exports.addUrlToList = function(){
+exports.addUrlToList = function(url){
+  urlList.push(url);
+  fs.writeFile('../archives/sites.txt', JSON.stringify(urlList), 'utf8');
 };
 
-exports.isURLArchived = function(){
+exports.isUrlArchived = function(url){
+  return fs.readFileSync('../archive/sites/' + url);
 };
 
 exports.downloadUrls = function(){
+
 };
